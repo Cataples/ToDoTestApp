@@ -31,6 +31,7 @@ const Login = () => {
           <input
             className="input"
             placeholder="password"
+            type="password"
             onChange={setPassword}
           />
         </div>
