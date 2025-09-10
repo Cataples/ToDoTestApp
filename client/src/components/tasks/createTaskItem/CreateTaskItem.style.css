@@ -1,0 +1,45 @@
+.add-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-item-title {
+  border: 1px solid #b3b3b3;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 4px;
+  flex-shrink: 1;
+}
+
+.add-item-content {
+  border: 1px solid #b3b3b3;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 4px;
+}
+
+.add-item-button {
+  border: 1px solid #b3b3b3;
+  border-radius: 4px;
+  color: #2b2b2b;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+}
+
+.add-item-button:active {
+  background-color: #d6d6d6;
+}
+
+.add-item-button:hover {
+  border-color: #2b2b2b;
+}
+
+.error {
+  color: red;
+}

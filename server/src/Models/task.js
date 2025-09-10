@@ -4,7 +4,7 @@ const Task = {
   getAll: async () => {
     const [rows] = await pool.query(`
       SELECT t.id, t.task_name, t.description, t.is_done,
-             GROUP_CONCAT(tag.text) as tags
+             GROUP_CONCAT(tag.id) as tags
       FROM Tasks t
       LEFT JOIN Task_Tags tt ON t.id = tt.task_id
       LEFT JOIN Tags tag ON tt.tag_id = tag.id
@@ -32,7 +32,7 @@ const Task = {
   delete: async (id) => {
     const [result] = await pool.query("DELETE FROM Tasks WHERE id = ?", [id]);
     return result;
-  }
+  },
 };
 
 module.exports = Task;

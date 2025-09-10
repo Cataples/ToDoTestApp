@@ -13,7 +13,7 @@ const tagController = {
   },
 
   assignTag: async (req, res) => {
-    const { taskId, tagId } = req.params;
+    const { taskId, tagId } = req.body;
     try {
       await Tag.assignTag(taskId, tagId);
       res.status(201).json({ taskId, tagId });
@@ -32,7 +32,7 @@ const tagController = {
       console.error(err);
       res.status(500).json({ error: "Database error" });
     }
-  }
+  },
 };
 
 module.exports = tagController;

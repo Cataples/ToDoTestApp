@@ -40,38 +40,40 @@ const useTags = () => {
       setTags(data);
     } catch (err) {
       setError(err.message);
+      throw new Error(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const assignTag = async (task_id, tag_id) => {
+  const assignTag = async (taskId, tagId) => {
     setLoading(true);
     setError(null);
     try {
       const res = await fetchWithAuth("/tags/assign", {
-        method: "PUT",
-        body: JSON.stringify({ task_id, tag_id }),
+        method: "POST",
+        body: JSON.stringify({ taskId, tagId }),
       });
       if (!res.ok) throw new Error("Failed to assign tag");
     } catch (err) {
       setError(err.message);
+      throw new Error(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const removeTag = async (task_id, tag_id) => {
+  const removeTag = async (taskId, tagId) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetchWithAuth("/tags/remove", {
-        method: "PUT",
-        body: JSON.stringify({ task_id, tag_id }),
+      const res = await fetchWithAuth(`/tags/${taskId}/${tagId}`, {
+        method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to remove tag");
     } catch (err) {
       setError(err.message);
+      throw new Error(err.message);
     } finally {
       setLoading(false);
     }

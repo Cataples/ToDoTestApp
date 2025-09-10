@@ -1,67 +1,69 @@
-import React, { useState } from "react";
-import "./TaskItem.css";
-import useTasks from "../../../hooks/useTasks";
-import useTags from "../../../hooks/useTags";
+import { useState } from "react";
+import classNames from "classnames";
+import { getTagNameByid, returnTagsAsArray } from "./utils";
 
-const TaskItem = ({
+import "./TaskItem.style.css";
+
+export const TaskItem = ({
   task,
+  toggleTaskDone,
+  deleteTask,
+  assignTag,
+  removeTag,
   tags,
-  onToggleDone,
-  onDelete,
-  onAssignTag,
-  onRemoveTag,
+  getTasks,
+  showError,
 }) => {
-  const [selectedTag, setSelectedTag] = useState("");
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
 
-  const {
-    tasks,
-    loading: tasksLoading,
-    error: tasksError,
-    createTask,
-    toggleTaskDone,
-  } = useTasks();
+  const handleCheckbox = () => toggleTaskDone(task.id, !task.is_done);
+  const handleDelete = async () => deleteTask(task.id);
 
-  const {
-    tags: tagOptions,
-    loading: tagsLoading,
-    error: tagsError,
-    assignTag,
-    removeTag,
-  } = useTags();
-
-  const handleCheckbox = () => onToggleDone(task.id, !task.is_done);
-  const handleDelete = () => onDelete(task.id);
-  const handleAssignTag = () => {
-    if (selectedTag) {
-      onAssignTag(task.id, selectedTag);
-      setSelectedTag("");
+  const handleAssignTag = async (e) => {
+    setIsErrorVisible(false);
+    try {
+      await assignTag(task.id, Number(e.target.value));
+      getTasks();
+    } catch {
+      setIsErrorVisible(true);
     }
   };
-  const handleRemoveTag = (tagId) => {
-    onRemoveTag(task.id, tagId);
+
+  const handleRemoveTag = async (tagId) => {
+    setIsErrorVisible(false);
+    try {
+      await removeTag(task.id, tagId);
+      getTasks();
+    } catch {
+      setIsErrorVisible(true);
+    }
   };
 
   return (
-    <div className="task-container">
+    <div
+      className={classNames("task-container", {
+        "has-error": isErrorVisible && showError,
+      })}
+    >
       <div className="task-row">
-        <input
-          type="checkbox"
-          checked={task.is_done}
-          onChange={handleCheckbox}
-        />
-        <span className={`task-name ${task.is_done ? "done" : ""}`}>
-          {task.task_name}
-        </span>
+        <div className="task-text" onClick={handleCheckbox}>
+          <input
+            type="checkbox"
+            checked={task.is_done}
+            onChange={handleCheckbox}
+          />
+          <span className={`task-name ${task.is_done ? "done" : ""}`}>
+            <b>{task.task_name}:</b> {task.description}
+          </span>
+        </div>
+
         <button className="delete-button" onClick={handleDelete}>
           Delete
         </button>
       </div>
 
       <div className="tag-row">
-        <select
-          value={selectedTag}
-          onChange={(e) => setSelectedTag(e.target.value)}
-        >
+        <select value={""} onChange={(e) => handleAssignTag(e)}>
           <option value="">Select tag</option>
           {tags.map((tag) => (
             <option key={tag.id} value={tag.id}>
@@ -69,26 +71,21 @@ const TaskItem = ({
             </option>
           ))}
         </select>
-        <button className="add-tag-button" onClick={handleAssignTag}>
-          Add Tag
-        </button>
       </div>
 
       <div className="tag-list">
         {task.tags &&
-          task.tags.map((tag) => (
+          returnTagsAsArray(task.tags).map((tag) => (
             <span
-              key={tag.id}
+              key={tag}
               className="tag-item"
-              onClick={() => handleRemoveTag(tag.id)}
+              onClick={() => handleRemoveTag(tag)}
               title="Click to remove"
             >
-              {tag.text} &times;
+              {getTagNameByid(tags, tag)}
             </span>
           ))}
       </div>
     </div>
   );
 };
-
-export default TaskItem;

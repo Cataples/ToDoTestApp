@@ -1,10 +1,11 @@
-import React from "react";
+import { TaskList } from "../../components/tasks/taskList/TaskList";
+import { PageContainer } from "../../components/reusables/pageContainer/PageContainer";
 
 const Tasks = () => {
   return (
-    <div>
-      <h1>Tasks Page</h1>
-    </div>
+    <PageContainer>
+      <TaskList />
+    </PageContainer>
   );
 };
 

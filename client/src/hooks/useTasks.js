@@ -41,22 +41,40 @@ const useTasks = () => {
       setTasks(data);
     } catch (err) {
       setError(err.message);
+      throw new Error(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const createTask = async (task_name, description) => {
+  const createTask = async (name, description) => {
     setLoading(true);
     try {
       const res = await fetchWithAuth("/tasks", {
         method: "POST",
-        body: JSON.stringify({ task_name, description }),
+        body: JSON.stringify({ task_name: name, description }),
       });
       if (!res.ok) throw new Error("Failed to create task");
       await getTasks();
     } catch (err) {
       setError(err.message);
+      throw new Error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteTask = async (taskId) => {
+    setLoading(true);
+    try {
+      const res = await fetchWithAuth(`/tasks/${taskId}`, {
+        method: "Delete",
+      });
+      if (!res.ok) throw new Error("Failed to remove task");
+      await getTasks();
+    } catch (err) {
+      setError(err.message);
+      throw new Error(err.message);
     } finally {
       setLoading(false);
     }
@@ -65,14 +83,15 @@ const useTasks = () => {
   const toggleTaskDone = async (task_id, is_done) => {
     setLoading(true);
     try {
-      const res = await fetchWithAuth(`/tasks/${task_id}`, {
-        method: "PATCH",
+      const res = await fetchWithAuth(`/tasks/${task_id}/done`, {
+        method: "PUT",
         body: JSON.stringify({ is_done }),
       });
       if (!res.ok) throw new Error("Failed to update task");
       await getTasks();
     } catch (err) {
       setError(err.message);
+      throw new Error(err.message);
     } finally {
       setLoading(false);
     }
@@ -85,9 +104,11 @@ const useTasks = () => {
 
   return {
     tasks,
+    getTasks,
     loading,
     error,
     createTask,
+    deleteTask,
     toggleTaskDone,
   };
 };
