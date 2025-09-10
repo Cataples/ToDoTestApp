@@ -25,7 +25,6 @@
   padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
-  flex-grow: 2;
 }
 
 .task-text {
@@ -33,6 +32,7 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  flex-grow: 2;
 }
 
 .tag-row {
