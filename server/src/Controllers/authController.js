@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 const pool = require("../dbconfig");
 
-const SECRET_KEY = "supersecretkey";
-
 const authController = {
   login: async (req, res) => {
     const { username, password } = req.body;
@@ -21,7 +19,7 @@ const authController = {
 
       const token = jwt.sign(
         { id: user.id, username: user.username },
-        SECRET_KEY,
+        process.env.SECRET_KEY,
         { expiresIn: "1h" }
       );
 
@@ -30,7 +28,7 @@ const authController = {
       console.error(err);
       res.status(500).json({ error: "Server error" });
     }
-  }
+  },
 };
 
-module.exports = { authController, SECRET_KEY };
+module.exports = { authController };
