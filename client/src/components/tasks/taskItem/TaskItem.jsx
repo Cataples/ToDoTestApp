@@ -71,20 +71,19 @@ export const TaskItem = ({
             </option>
           ))}
         </select>
-      </div>
-
-      <div className="tag-list">
-        {task.tags &&
-          returnTagsAsArray(task.tags).map((tag) => (
-            <span
-              key={tag}
-              className="tag-item"
-              onClick={() => handleRemoveTag(tag)}
-              title="Click to remove"
-            >
-              {getTagNameByid(tags, tag)}
-            </span>
-          ))}
+        <div className="tag-list">
+          {task.tags &&
+            returnTagsAsArray(task.tags).map((tag) => (
+              <span
+                key={tag}
+                className="tag-item"
+                onClick={() => handleRemoveTag(tag)}
+                title="Click to remove"
+              >
+                {getTagNameByid(tags, tag)}
+              </span>
+            ))}
+        </div>
       </div>
     </div>
   );

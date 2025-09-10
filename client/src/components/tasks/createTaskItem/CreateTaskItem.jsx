@@ -8,7 +8,11 @@ export const CreateTaskItem = ({ createTask, error }) => {
   const [taskContent, setTaskContent] = useState("");
 
   const handleAddTask = () => {
-    if (taskTitle) createTask(taskTitle, taskContent);
+    if (taskTitle) {
+      createTask(taskTitle, taskContent);
+      setTaskContent("");
+      setTaskTitle("");
+    }
   };
 
   return (
@@ -16,11 +20,13 @@ export const CreateTaskItem = ({ createTask, error }) => {
       <div className="inputs-container">
         <input
           className="add-item-title"
+          value={taskTitle}
           onChange={(e) => setTaskTitle(e.target.value)}
           placeholder="title"
         />
         <input
           className="add-item-content"
+          value={taskContent}
           onChange={(e) => setTaskContent(e.target.value)}
           placeholder="text"
         />

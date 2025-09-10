@@ -43,3 +43,8 @@
 .error {
   color: red;
 }
+
+.disabled {
+  pointer-events: none;
+  color: #b3b3b3;
+}
