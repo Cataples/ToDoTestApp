@@ -1,8 +1,11 @@
-import useTasks from "../../../hooks/useTasks";
+import { useTasks } from "../../../hooks/useTasks";
 import { PageContainer } from "../../reusables/pageContainer/PageContainer";
 import { TaskItem } from "../taskItem/TaskItem";
-import useTags from "../../../hooks/useTags";
+import { useTags } from "../../../hooks/useTags";
 import { CreateTaskItem } from "../createTaskItem/CreateTaskItem";
+
+import "./TaskList.style.css";
+import "../../reusables/styles/globalStyles.css";
 
 export const TaskList = () => {
   const { tasks, error, createTask, toggleTaskDone, deleteTask, getTasks } =
@@ -25,10 +28,10 @@ export const TaskList = () => {
 
   return (
     <PageContainer>
-      <p>Task List:</p>
+      <p className="list-heading">Task List:</p>
       {displayedTaskList}
       {(error || tagsError) && (
-        <p className="error-test">{error || tagsError}</p>
+        <p className="error-message">{error || tagsError}</p>
       )}
       <CreateTaskItem createTask={createTask} error={error} />
     </PageContainer>

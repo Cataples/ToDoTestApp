@@ -17,6 +17,7 @@ export const TaskItem = ({
   const [isErrorVisible, setIsErrorVisible] = useState(false);
 
   const handleCheckbox = () => toggleTaskDone(task.id, !task.is_done);
+
   const handleDelete = async () => deleteTask(task.id);
 
   const handleAssignTag = async (e) => {
@@ -64,7 +65,7 @@ export const TaskItem = ({
 
       <div className="tag-row">
         <select value={""} onChange={(e) => handleAssignTag(e)}>
-          <option value="">Select tag</option>
+          <option value="">Select tag to add</option>
           {tags.map((tag) => (
             <option key={tag.id} value={tag.id}>
               {tag.text}

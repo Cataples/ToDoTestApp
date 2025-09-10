@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate  } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Login from "../../pages/Login/Login";
-import Tasks from "../../pages/Tasks/Tasks";
-import Error from "../../pages/Error/Error";
+import { Login } from "../../pages/Login/Login";
+import { Tasks } from "../../pages/Tasks/Tasks";
+import { UnexistingPage } from "../../pages/UnexistingPage/UnexistingPage";
 
 export const Router = () => {
   return (
@@ -11,7 +11,7 @@ export const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/" element={<Navigate to="/tasks" replace />} />
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<UnexistingPage />} />
       </Routes>
     </BrowserRouter>
   );

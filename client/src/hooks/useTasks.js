@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const useTasks = () => {
+export const useTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,9 +23,8 @@ const useTasks = () => {
     });
 
     if (res.status === 401) {
-      localStorage.removeItem("token");
       navigate("/login");
-      throw new Error("Unauthorized");
+      localStorage.removeItem("token");
     }
 
     return res;
@@ -36,7 +35,8 @@ const useTasks = () => {
     setError(null);
     try {
       const res = await fetchWithAuth("/tasks");
-      if (!res.ok) throw new Error("Failed to fetch tasks");
+      if (!res.ok && res.status !== 401)
+        throw new Error("Failed to fetch tasks");
       const data = await res.json();
       setTasks(data);
     } catch (err) {
@@ -47,12 +47,12 @@ const useTasks = () => {
     }
   };
 
-  const createTask = async (name, description) => {
+  const createTask = async (task_name, description) => {
     setLoading(true);
     try {
       const res = await fetchWithAuth("/tasks", {
         method: "POST",
-        body: JSON.stringify({ task_name: name, description }),
+        body: JSON.stringify({ task_name, description }),
       });
       if (!res.ok) throw new Error("Failed to create task");
       await getTasks();
@@ -112,5 +112,3 @@ const useTasks = () => {
     toggleTaskDone,
   };
 };
-
-export default useTasks;

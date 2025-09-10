@@ -4,8 +4,9 @@ import useLogin from "../../hooks/useLogin";
 import classNames from "classnames";
 
 import "./Login.style.css";
+import "../../components/reusables/styles/globalStyles.css";
 
-const Login = () => {
+export const Login = () => {
   const {
     setUsername,
     setPassword,
@@ -19,17 +20,18 @@ const Login = () => {
   if (loading) {
     return <Loading />;
   }
+
   return (
     <PageContainer centerContent={true}>
       <div className="form-container">
         <div className="inputs-container">
           <input
-            className="input"
+            className="simple-input"
             placeholder="username"
             onChange={setUsername}
           />
           <input
-            className="input"
+            className="simple-input"
             placeholder="password"
             type="password"
             onChange={setPassword}
@@ -37,7 +39,7 @@ const Login = () => {
         </div>
         <div className="buttons-container">
           <button
-            className={classNames("login-button", {
+            className={classNames("simple-button", {
               disabled: !username.length || !password.length,
             })}
             onClick={login}
@@ -54,5 +56,3 @@ const Login = () => {
     </PageContainer>
   );
 };
-
-export default Login;

@@ -9,42 +9,17 @@
 }
 
 .add-item-title {
-  border: 1px solid #b3b3b3;
+  border: 1px solid var(--grey-1);
   border-radius: 4px;
-  font-size: 16px;
-  padding: 4px;
   flex-shrink: 1;
-}
-
-.add-item-content {
-  border: 1px solid #b3b3b3;
-  border-radius: 4px;
   font-size: 16px;
   padding: 4px;
 }
 
-.add-item-button {
-  border: 1px solid #b3b3b3;
-  border-radius: 4px;
-  color: #2b2b2b;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 4px 8px;
+.title-grow {
+  flex-grow: 1;
 }
 
-.add-item-button:active {
-  background-color: #d6d6d6;
-}
-
-.add-item-button:hover {
-  border-color: #2b2b2b;
-}
-
-.error {
-  color: red;
-}
-
-.disabled {
-  pointer-events: none;
-  color: #b3b3b3;
+.text-grow {
+  flex-grow: 3;
 }

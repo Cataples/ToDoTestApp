@@ -1,0 +1,33 @@
+.error-message {
+  color: var(--custom-red);
+  font-size: 12px;
+}
+
+.simple-button {
+  border: 1px solid var(--grey-1);
+  border-radius: 4px;
+  color: var(--grey-5);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+}
+
+.simple-button:active {
+  background-color: var(--grey-4);
+}
+
+.simple-button:hover {
+  border-color: var(--grey-5);
+}
+
+.disabled {
+  color: var(--grey-1);
+  pointer-events: none;
+}
+
+.simple-input {
+  border: 1px solid var(--grey-1);
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 4px;
+}

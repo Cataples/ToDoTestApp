@@ -1,7 +1,8 @@
 import { useState } from "react";
+import classNames from "classnames";
 
 import "./CreateTaskItem.style.css";
-import classNames from "classnames";
+import "../../reusables/styles/globalStyles.css";
 
 export const CreateTaskItem = ({ createTask, error }) => {
   const [taskTitle, setTaskTitle] = useState("");
@@ -19,19 +20,19 @@ export const CreateTaskItem = ({ createTask, error }) => {
     <div className="add-item-container">
       <div className="inputs-container">
         <input
-          className="add-item-title"
+          className="add-item-title title-grow"
           value={taskTitle}
           onChange={(e) => setTaskTitle(e.target.value)}
           placeholder="title"
         />
         <input
-          className="add-item-content"
+          className="simple-input text-grow"
           value={taskContent}
           onChange={(e) => setTaskContent(e.target.value)}
           placeholder="text"
         />
         <button
-          className={classNames("add-item-button", {
+          className={classNames("simple-button", {
             disabled: !taskTitle.length,
           })}
           onClick={handleAddTask}
@@ -39,7 +40,7 @@ export const CreateTaskItem = ({ createTask, error }) => {
           Add
         </button>
       </div>
-      {error && <p className="error">{error}</p>}
+      {error && <p className="error-message">{error}</p>}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-const useTags = () => {
+export const useTags = () => {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,9 +22,8 @@ const useTags = () => {
     });
 
     if (res.status === 401) {
+      navigate("/login");
       localStorage.removeItem("token");
-      navigate("/");
-      throw new Error("Unauthorized");
     }
 
     return res;
@@ -35,7 +34,8 @@ const useTags = () => {
     setError(null);
     try {
       const res = await fetchWithAuth("/tags");
-      if (!res.ok) throw new Error("Failed to fetch tags");
+      if (!res.ok && res.status !== 401)
+        throw new Error("Failed to fetch tags");
       const data = await res.json();
       setTags(data);
     } catch (err) {
@@ -92,5 +92,3 @@ const useTags = () => {
     removeTag,
   };
 };
-
-export default useTags;
